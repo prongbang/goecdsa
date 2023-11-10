@@ -2,6 +2,12 @@
 
 Generate key pair and signing (NIST P-256 (aka secp256r1) EC key pair using ECDSA) for Golang.
 
+## Install
+
+```shell
+go get github.com/prongbang/goecdsa
+```
+
 ## Generate KeyPair
 
 ```go
