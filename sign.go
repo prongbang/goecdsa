@@ -14,13 +14,13 @@ type ECDSASignature struct {
 	R, S *big.Int
 }
 
-func SignASN1(privateKey *ecdsa.PrivateKey, message string) (string, error) {
+func SignASN1(privateKey *ecdsa.PrivateKey, message []byte) (string, error) {
 	if privateKey == nil {
 		return "", errors.New("PrivateKey is nil")
 	}
 
 	// Create a SHA-256 hash of the message
-	hash := sha256.Sum256([]byte(message))
+	hash := sha256.Sum256(message)
 
 	// Sign the hash using ECDSA
 	sig, err := ecdsa.SignASN1(rand.Reader, privateKey, hash[:])
@@ -34,13 +34,13 @@ func SignASN1(privateKey *ecdsa.PrivateKey, message string) (string, error) {
 	return base64EncodedSignature, nil
 }
 
-func Sign(privateKey *ecdsa.PrivateKey, message string) (string, error) {
+func Sign(privateKey *ecdsa.PrivateKey, message []byte) (string, error) {
 	if privateKey == nil {
 		return "", errors.New("PrivateKey is nil")
 	}
 
 	// Create a SHA-256 hash of the message
-	hash := sha256.Sum256([]byte(message))
+	hash := sha256.Sum256(message)
 
 	// Sign the hash using ECDSA
 	r, s, err := ecdsa.Sign(rand.Reader, privateKey, hash[:])

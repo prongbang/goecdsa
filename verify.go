@@ -7,13 +7,13 @@ import (
 	"encoding/base64"
 )
 
-func Verify(base64PublicKey string, message string, signature string) (bool, error) {
+func Verify(base64PublicKey string, message []byte, signature string) (bool, error) {
 	ecPublicKey, err := ParsePublicKey(base64PublicKey)
 	if err != nil {
 		return false, err
 	}
 
-	hash := sha256.Sum256([]byte(message))
+	hash := sha256.Sum256(message)
 
 	sigBytes, err := base64.StdEncoding.DecodeString(signature)
 	if err != nil {
@@ -29,13 +29,13 @@ func Verify(base64PublicKey string, message string, signature string) (bool, err
 	return ecdsa.Verify(ecPublicKey, hash[:], sig.R, sig.S), nil
 }
 
-func VerifyASN1(base64PublicKey string, message string, signature string) (bool, error) {
+func VerifyASN1(base64PublicKey string, message []byte, signature string) (bool, error) {
 	ecPublicKey, err := ParsePublicKey(base64PublicKey)
 	if err != nil {
 		return false, err
 	}
 
-	hash := sha256.Sum256([]byte(message))
+	hash := sha256.Sum256(message)
 
 	sigBytes, err := base64.StdEncoding.DecodeString(signature)
 	if err != nil {

@@ -73,12 +73,12 @@ func TestParsePrivateKey(t *testing.T) {
 		t.Fatal("Load private key error:", err)
 	}
 
-	signature, err := goecdsa.Sign(privateKey, "hello")
+	signature, err := goecdsa.Sign(privateKey, []byte("hello"))
 	if err != nil {
 		t.Fatal("Sign error:", err)
 	}
 
-	verified, err := goecdsa.Verify(pkBase64, "hello", signature)
+	verified, err := goecdsa.Verify(pkBase64, []byte("hello"), signature)
 	if err != nil {
 		t.Fatal("Verify error:", err)
 	}

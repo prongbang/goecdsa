@@ -13,7 +13,7 @@ func TestVerify(t *testing.T) {
 	signature := "MEUCIE1EIo+C5GuCLCatVt4MWw8hxGHS1BGdoEdU6YjoJRqNAiEAjkvtSTq2ZpW3iwhKyz77DERUEOIdWVnu91V4WLkLK1c="
 
 	// When
-	match, err := goecdsa.Verify(pk, message, signature)
+	match, err := goecdsa.Verify(pk, []byte(message), signature)
 
 	// When
 	if err != nil || !match {
@@ -28,7 +28,7 @@ func TestVerifyASN1(t *testing.T) {
 	signature := "MEUCIE1EIo+C5GuCLCatVt4MWw8hxGHS1BGdoEdU6YjoJRqNAiEAjkvtSTq2ZpW3iwhKyz77DERUEOIdWVnu91V4WLkLK1c="
 
 	// When
-	match, err := goecdsa.VerifyASN1(pk, message, signature)
+	match, err := goecdsa.VerifyASN1(pk, []byte(message), signature)
 
 	// When
 	if err != nil || !match {
