@@ -2,7 +2,6 @@ package goecdsa
 
 import (
 	"crypto/ecdsa"
-	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/x509"
 	"encoding/base64"
@@ -48,11 +47,9 @@ func (k *KeyPair) PrivateKeyString() (string, error) {
 	return base64Encoded, nil
 }
 
-func GenerateKeyPair() (*KeyPair, error) {
-	// P256 returns a Curve which implements NIST P-256 (FIPS 186-3, section D.2.3), also known as secp256r1 or prime256v1. The CurveParams.Name of this Curve is "P-256".
-	curve := elliptic.P256()
-
-	privateKey, err := ecdsa.GenerateKey(curve, rand.Reader)
+func GenerateKeyPair(curve ECDSACurve) (*KeyPair, error) {
+	// PXXX returns a Curve which implements NIST P-XXX (FIPS 186-3, section D.2.3), also known as secpXXXr1 or primeXXXv1. The CurveParams.Name of this Curve is "P-XXX".
+	privateKey, err := ecdsa.GenerateKey(curve.Elliptic(), rand.Reader)
 	if err != nil {
 		return nil, err
 	}

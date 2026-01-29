@@ -3,7 +3,6 @@ package goecdsa
 import (
 	"crypto/ecdsa"
 	"crypto/rand"
-	"crypto/sha256"
 	"encoding/asn1"
 	"encoding/base64"
 	"errors"
@@ -14,13 +13,13 @@ type ECDSASignature struct {
 	R, S *big.Int
 }
 
-func SignASN1(privateKey *ecdsa.PrivateKey, message []byte) (string, error) {
+func SignASN1(privateKey *ecdsa.PrivateKey, message []byte, curve ECDSACurve) (string, error) {
 	if privateKey == nil {
 		return "", errors.New("PrivateKey is nil")
 	}
 
-	// Create a SHA-256 hash of the message
-	hash := sha256.Sum256(message)
+	// Create a SHA-XXX hash of the message
+	hash := Sum(message, curve)
 
 	// Sign the hash using ECDSA
 	sig, err := ecdsa.SignASN1(rand.Reader, privateKey, hash[:])
@@ -34,13 +33,13 @@ func SignASN1(privateKey *ecdsa.PrivateKey, message []byte) (string, error) {
 	return base64EncodedSignature, nil
 }
 
-func Sign(privateKey *ecdsa.PrivateKey, message []byte) (string, error) {
+func Sign(privateKey *ecdsa.PrivateKey, message []byte, curve ECDSACurve) (string, error) {
 	if privateKey == nil {
 		return "", errors.New("PrivateKey is nil")
 	}
 
-	// Create a SHA-256 hash of the message
-	hash := sha256.Sum256(message)
+	// Create a SHA-XXX hash of the message
+	hash := Sum(message, curve)
 
 	// Sign the hash using ECDSA
 	r, s, err := ecdsa.Sign(rand.Reader, privateKey, hash[:])

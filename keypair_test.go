@@ -20,9 +20,24 @@ func TestParsePublicKey(t *testing.T) {
 	}
 }
 
-func TestGenerateKeyPairShouldReturnPublicKeyString(t *testing.T) {
+func TestGenerateKeyPairP256ShouldReturnPublicKeyString(t *testing.T) {
 	// Given
-	kp, _ := goecdsa.GenerateKeyPair()
+	kp, _ := goecdsa.GenerateKeyPair(goecdsa.P256)
+
+	// When
+	pk, err := kp.PublicKeyString()
+
+	// Then
+	if pk == "" {
+		t.Error("Publick Key is empty", err)
+	} else {
+		fmt.Println("pk:", pk)
+	}
+}
+
+func TestGenerateKeyPairP384ShouldReturnPublicKeyString(t *testing.T) {
+	// Given
+	kp, _ := goecdsa.GenerateKeyPair(goecdsa.P384)
 
 	// When
 	pk, err := kp.PublicKeyString()
@@ -37,7 +52,7 @@ func TestGenerateKeyPairShouldReturnPublicKeyString(t *testing.T) {
 
 func TestGenerateKeyPairShouldReturnPrivateKeyString(t *testing.T) {
 	// Given
-	kp, _ := goecdsa.GenerateKeyPair()
+	kp, _ := goecdsa.GenerateKeyPair(goecdsa.P256)
 
 	// When
 	sk, _ := kp.PrivateKeyString()
@@ -52,7 +67,7 @@ func TestGenerateKeyPairShouldReturnPrivateKeyString(t *testing.T) {
 
 func TestParsePrivateKey(t *testing.T) {
 	// Given
-	kp, err := goecdsa.GenerateKeyPair()
+	kp, err := goecdsa.GenerateKeyPair(goecdsa.P256)
 	if err != nil {
 		t.Fatal("Generate keypair error:", err)
 	}
@@ -73,12 +88,12 @@ func TestParsePrivateKey(t *testing.T) {
 		t.Fatal("Load private key error:", err)
 	}
 
-	signature, err := goecdsa.Sign(privateKey, []byte("hello"))
+	signature, err := goecdsa.Sign(privateKey, []byte("hello"), goecdsa.P256)
 	if err != nil {
 		t.Fatal("Sign error:", err)
 	}
 
-	verified, err := goecdsa.Verify(pkBase64, []byte("hello"), signature)
+	verified, err := goecdsa.Verify(pkBase64, []byte("hello"), signature, goecdsa.P256)
 	if err != nil {
 		t.Fatal("Verify error:", err)
 	}

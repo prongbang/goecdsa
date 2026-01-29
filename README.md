@@ -1,6 +1,6 @@
 # goecdsa
 
-Generate key pair and signing (NIST P-256 (aka secp256r1) EC key pair using ECDSA) for Golang.
+Generate key pair and signing (NIST P-224 (aka secp224r1), P-256 (aka secp256r1), P-384 (aka secp384r1), P-521 (aka secp521r1) EC key pair using ECDSA) for Golang.
 
 ## Install
 
